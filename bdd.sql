@@ -1,0 +1,34 @@
+CREATE DATABASE IF NOT EXISTS evalphp2025 CHARSET utf8mb4;
+USE evalphp2025;
+
+CREATE TABLE IF NOT EXISTS users(
+id_users INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+firstname VARCHAR(50) NOT NULL,
+lastname VARCHAR(50) NOT NULL,
+email VARCHAR(50) UNIQUE NOT NULL,
+password VARCHAR(100) NOT NULL
+)ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS category(
+id_category INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+name VARCHAR(50) UNIQUE NOT NULL
+)ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS book(
+id_book INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+title VARCHAR(50) NOT NULL,
+description VARCHAR(255),
+publication_date DATETIME DEFAULT current_timestamp NOT NULL,
+author VARCHAR(50),
+id_category INT NOT NULL,
+id_users INT NOT NULL
+)ENGINE = InnoDB;
+
+ALTER TABLE book ADD CONSTRAINT FOREIGN KEY (id_category)
+REFERENCES category(id_category);
+
+ALTER TABLE book ADD CONSTRAINT FOREIGN KEY (id_users)
+REFERENCES users(id_users);
+
+INSERT INTO category (name) VALUES 
+("Poésie"),("Roman"),("Conte"),("Théâtre"),("Fable"),("Biographie");
